@@ -1,5 +1,6 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
     // TODO: implement info media tap interactions
     public void onMediaClicked(DummyContent.DummyItem item) {
         Log.d(TAG, "dummy item clicked: " + item.id);
+        startActivity(new Intent(getApplicationContext(), CountActivity.class));
     }
 
     // TODO: Update to include remaing fragments
