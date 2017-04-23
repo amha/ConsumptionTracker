@@ -22,8 +22,8 @@ import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity implements InfoFragment.OnFragmentInteractionListener, MediaItemFragment.OnListFragmentInteractionListener {
 
-    String TAG = "CONSOLE_TEXT";
-
+    final String TAG = "CONSOLE_TEXT";
+    final String SELECTED_PARAM = "ID_NUMBER";
     private int NUM_PAGES = 2;
     private PagerAdapter myPagerAdapter;
 
@@ -47,13 +47,9 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_media) {
-                    // The tab with id R.id.tab_favorites was selected,
-                    // change your content accordingly.
                     viewPager.setCurrentItem(1);
                 }
                 if (tabId == R.id.tab_favorites) {
-                    // The tab with id R.id.tab_favorites was selected,
-                    // change your content accordingly.
                     viewPager.setCurrentItem(0);
                 }
             }
@@ -65,17 +61,16 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
 
     }
 
-    // TODO: implement info fragment interactions
     public void infoFragmentClicked(Uri uri) {
     }
 
-    // TODO: implement info media tap interactions
     public void onMediaClicked(DummyContent.DummyItem item) {
         Log.d(TAG, "dummy item clicked: " + item.id);
-        startActivity(new Intent(getApplicationContext(), CountActivity.class));
+        Intent mIntent = new Intent(getApplicationContext(), CountActivity.class);
+        mIntent.putExtra(SELECTED_PARAM, item.id);
+        startActivity(mIntent);
     }
 
-    // TODO: Update to include remaing fragments
     private class MyPagerAdaper extends FragmentStatePagerAdapter {
 
         public MyPagerAdaper(FragmentManager f_manager) {
@@ -97,5 +92,4 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
             return NUM_PAGES;
         }
     }
-
 }

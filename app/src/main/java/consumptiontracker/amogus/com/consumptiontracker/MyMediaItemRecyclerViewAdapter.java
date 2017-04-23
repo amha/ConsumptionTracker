@@ -11,11 +11,6 @@ import java.util.List;
 import consumptiontracker.amogus.com.consumptiontracker.MediaItemFragment.OnListFragmentInteractionListener;
 import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent.DummyItem;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyMediaItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMediaItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;

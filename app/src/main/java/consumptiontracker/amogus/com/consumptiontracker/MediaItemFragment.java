@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent;
 import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent.DummyItem;
 
-import java.util.List;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -23,9 +21,7 @@ import java.util.List;
  */
 public class MediaItemFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -36,7 +32,6 @@ public class MediaItemFragment extends Fragment {
     public MediaItemFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static MediaItemFragment newInstance(int columnCount) {
         MediaItemFragment fragment = new MediaItemFragment();
@@ -92,18 +87,7 @@ public class MediaItemFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onMediaClicked(DummyItem item);
     }
 }
