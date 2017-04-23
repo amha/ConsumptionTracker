@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.orm.SugarRecord;
+
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,22 +21,18 @@ import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
 public class CountFragment extends Fragment {
 
-    final String TAG = "COUNTER_OUT";
-
-    // Determine whether to create a new table counter
-    // based on boolean value
-    boolean flag = false;
+    // Counter model associated with this fragment
+    private static Count counter;
+    final String TAG = "CT_AM";
     final String FLAG_LABEL = "first_run";
 
     // Classification scheme
     final String categories = "Media";
     final String type = "Reading";
-
+    // Determine whether to create a new table counter
+    // based on boolean value
+    boolean flag = false;
     String title;
-
-    // Counter model associated with this fragment
-    private static Count counter;
-
     // Data binding views via butterknife
     @BindView(R.id.button)
     Button clicker;
@@ -51,7 +50,6 @@ public class CountFragment extends Fragment {
         CountFragment fragment = new CountFragment();
         Bundle args = new Bundle();
         args.putString("PAGE", title);
-        fragment.setRetainInstance(true);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,24 +58,21 @@ public class CountFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // set page title based on what was selected on
+        // the previous screen
         if (getArguments() != null) {
             title = getArguments().getString("PAGE");
         }
 
-        if (savedInstanceState == null) {
+        counter = Count.findById(Count.class, 1);
+        if (counter != null) {
+            // check if count table has been created yet
+            counter.save();
+        } else {
+            // counter table doesnt' exist, so create it
             counter = new Count(categories, type);
             counter.save();
-            flag = true;
-        } else {
-            // restore saved data
-            counter = Count.findById(Count.class, 1);
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outstate) {
-        super.onSaveInstanceState(outstate);
-        outstate.putBoolean(FLAG_LABEL, flag);
     }
 
     @Override
@@ -92,15 +87,16 @@ public class CountFragment extends Fragment {
 
         // Display current count
         if (counter != null) {
-            countOutput.setText(String.valueOf(getCounter().findById(Count.class, 1).count));
+            countOutput.setText(String.valueOf(SugarRecord.findById(Count.class, 1).count));
         }
 
         // Add listener to capture counting
         clicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Count temp = getCounter().findById(Count.class, 1);
+                Count temp = SugarRecord.findById(Count.class, 1);
                 temp.count = temp.count + 1;
+                temp.timestamp = new Date(System.currentTimeMillis());
                 temp.save();
                 countOutput.setText(String.valueOf(temp.count));
                 out();
@@ -116,7 +112,7 @@ public class CountFragment extends Fragment {
         }
     }
 
-    public Count getCounter(){
+    public Count getCounter() {
         return counter;
     }
 }

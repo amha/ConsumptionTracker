@@ -16,31 +16,37 @@ import android.util.Log;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent;
+import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
 public class MainActivity extends AppCompatActivity implements InfoFragment.OnFragmentInteractionListener, MediaItemFragment.OnListFragmentInteractionListener {
 
-    final String TAG = "CONSOLE_TEXT";
+    final String TAG = "CT_AM";
     final String SELECTED_PARAM = "ID_NUMBER";
-    private int NUM_PAGES = 2;
-    private PagerAdapter myPagerAdapter;
-
+    Count counter;
     @BindView(R.id.pager)
     ViewPager viewPager;
-
     @BindView(R.id.top_toolbar)
     Toolbar topToolbar;
-
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
+    private int NUM_PAGES = 2;
+    private PagerAdapter myPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        List<Count> list = Count.listAll(Count.class);
+        for (Count item : list) {
+            Log.d(TAG, "out: " + item.count + " - " + item.countCategory + " - " + item.timestamp);
+        }
 
         topToolbar.setTitle(getResources().getString(R.string.app_name));
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -65,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
     }
 
     public void onMediaClicked(DummyContent.DummyItem item) {
-        Log.d(TAG, "dummy item clicked: " + item.id);
         Intent mIntent = new Intent(getApplicationContext(), CountActivity.class);
         mIntent.putExtra(SELECTED_PARAM, item.id);
         startActivity(mIntent);

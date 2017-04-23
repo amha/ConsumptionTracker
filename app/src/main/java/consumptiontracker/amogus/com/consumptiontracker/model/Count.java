@@ -8,15 +8,12 @@ public class Count extends SugarRecord {
 
     // Category associated with user activity
     public String countCategory;
-
-    // Type of user activity being counted
-    private String countType;
-
     // When the user recorded the activity
     public Date timestamp;
-
     // Frequency count for a given activity
     public int count;
+    // Type of user activity being counted
+    private String countType;
 
     public Count(){
         // Empty constructor
@@ -28,5 +25,4 @@ public class Count extends SugarRecord {
         this.count = 0;
         this.timestamp = new Date(System.currentTimeMillis());
     }
-
 }
