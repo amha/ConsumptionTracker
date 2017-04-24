@@ -13,15 +13,15 @@ public class Count extends SugarRecord {
     // Frequency count for a given activity
     public int count;
     // Type of user activity being counted
-    private String countType;
+    public String countAction;
 
     public Count(){
         // Empty constructor
     }
 
-    public Count(String category, String type){
+    public Count(String category, String action) {
         this.countCategory = category;
-        this.countType = type;
+        this.countAction = action;
         this.count = 0;
         this.timestamp = new Date(System.currentTimeMillis());
     }

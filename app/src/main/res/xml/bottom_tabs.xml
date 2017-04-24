@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        id="@+id/tab_favorites"
-        icon="@drawable/ic_favorite"
-        title="Favorites" />
-    <tab
-        id="@+id/tab_media"
         icon="@drawable/ic_info_outline"
+        id="@+id/tab_media"
         title="Info" />
     <tab
-        id="@+id/tab_friends"
+        icon="@drawable/ic_favorite"
+        id="@+id/tab_favorites"
+        title="Favorites" />
+
+    <tab
         icon="@drawable/ic_tv"
+        id="@+id/tab_friends"
         title="Media" />
 </tabs>

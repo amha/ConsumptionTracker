@@ -9,4 +9,19 @@
     <string name="counter_default_number">00</string>
     <string name="counter_free_text_hint">Was it eventful?</string>
 
+
+    <!-- Config -->
+    <string-array name="count_categories">
+        <item>Chores</item>
+        <item>Media</item>
+        <item>Work</item>
+    </string-array>
+
+    <string-array name="chore_actions">
+        <item>Bill</item>
+        <item>Dishes</item>
+        <item>Laundry</item>
+        <item>Groceries</item>
+    </string-array>
+
 </resources>

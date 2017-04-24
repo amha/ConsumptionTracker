@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
 
         myPagerAdapter = new MyPagerAdaper(getSupportFragmentManager());
         viewPager.setAdapter(myPagerAdapter);
+        viewPager.setCurrentItem(1);
 
     }
 

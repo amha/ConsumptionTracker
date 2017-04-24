@@ -23,7 +23,7 @@ public class DummyContent {
      */
     public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
-    private static final int COUNT = 25;
+    private static final int COUNT = 4;
 
     static {
         // Add some sample items.
@@ -42,6 +42,7 @@ public class DummyContent {
     }
 
     private static String makeDetails(int position) {
+
         StringBuilder builder = new StringBuilder();
         builder.append("Details about Item: ").append(position);
         for (int i = 0; i < position; i++) {

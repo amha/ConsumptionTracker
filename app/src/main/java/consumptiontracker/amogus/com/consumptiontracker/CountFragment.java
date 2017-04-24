@@ -1,5 +1,6 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.orm.SugarRecord;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,8 +72,10 @@ public class CountFragment extends Fragment {
             counter.save();
         } else {
             // counter table doesnt' exist, so create it
-            counter = new Count(categories, type);
-            counter.save();
+            //counter = new Count(categories, type);
+            //counter.save();
+            init();
+
         }
     }
 
@@ -108,11 +112,25 @@ public class CountFragment extends Fragment {
     private void out() {
         List<Count> books = Count.listAll(Count.class);
         for (Count count : books) {
-            Log.d(TAG, "out: " + count.count + " - " + count.countCategory + " - " + count.timestamp);
+            Log.d(TAG, "out: " + count.count + " - " + count.countCategory + " - " + count.countAction + " - " + count.timestamp);
         }
     }
 
     public Count getCounter() {
         return counter;
+    }
+
+    private void init() {
+        String sampleCategory = "Chores";
+        Resources resources = getResources();
+        String[] choreActions = resources.getStringArray(R.array.chore_actions);
+
+        List<Count> bulkInsertRecords = new ArrayList<Count>();
+
+        for (String action : choreActions) {
+            bulkInsertRecords.add(new Count(sampleCategory, action));
+        }
+        Count.saveInTx(bulkInsertRecords);
+        out();
     }
 }
