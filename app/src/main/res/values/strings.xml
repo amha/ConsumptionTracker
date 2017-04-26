@@ -18,10 +18,10 @@
     </string-array>
 
     <string-array name="chore_actions">
-        <item>Bill</item>
-        <item>Dishes</item>
-        <item>Laundry</item>
-        <item>Groceries</item>
+        <item>Pay Bills</item>
+        <item>Wash Dishes</item>
+        <item>Do Laundry</item>
+        <item>Buy Groceries</item>
     </string-array>
 
 </resources>

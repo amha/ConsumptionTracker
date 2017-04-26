@@ -6,12 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent;
-import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent.DummyItem;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -22,6 +23,8 @@ import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent.Dummy
 public class MediaItemFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private final String TAG = "CT_AM";
+    List<String> mediaItems;
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -55,6 +58,13 @@ public class MediaItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mediaitem_list, container, false);
 
+        mediaItems = new ArrayList<String>();
+
+        String[] mediaArray = getResources().getStringArray(R.array.chore_actions);
+        for (String item : mediaArray) {
+            mediaItems.add(item);
+            Log.d(TAG, "item data = " + item);
+        }
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -64,7 +74,8 @@ public class MediaItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMediaItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            recyclerView.setAdapter(new MyMediaItemRecyclerViewAdapter(mediaItems, mListener));
         }
         return view;
     }
@@ -88,6 +99,6 @@ public class MediaItemFragment extends Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        void onMediaClicked(DummyItem item);
+        void onMediaClicked(String item);
     }
 }

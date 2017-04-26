@@ -9,14 +9,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import consumptiontracker.amogus.com.consumptiontracker.MediaItemFragment.OnListFragmentInteractionListener;
-import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent.DummyItem;
 
 public class MyMediaItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMediaItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<String> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMediaItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyMediaItemRecyclerViewAdapter(List<String> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -31,8 +30,8 @@ public class MyMediaItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMedia
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(String.valueOf(position));
+        holder.mContentView.setText(mValues.get(position));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +54,7 @@ public class MyMediaItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMedia
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public String mItem;
 
         public ViewHolder(View view) {
             super(view);

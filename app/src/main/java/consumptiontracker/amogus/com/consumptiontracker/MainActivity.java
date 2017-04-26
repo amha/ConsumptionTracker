@@ -20,7 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import consumptiontracker.amogus.com.consumptiontracker.dummy.DummyContent;
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
 public class MainActivity extends AppCompatActivity implements InfoFragment.OnFragmentInteractionListener, MediaItemFragment.OnListFragmentInteractionListener {
@@ -71,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
     public void infoFragmentClicked(Uri uri) {
     }
 
-    public void onMediaClicked(DummyContent.DummyItem item) {
+    public void onMediaClicked(String item) {
         Intent mIntent = new Intent(getApplicationContext(), CountActivity.class);
-        mIntent.putExtra(SELECTED_PARAM, item.id);
+        mIntent.putExtra(SELECTED_PARAM, item);
         startActivity(mIntent);
     }
 
