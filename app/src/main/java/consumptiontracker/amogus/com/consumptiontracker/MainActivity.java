@@ -22,18 +22,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
-public class MainActivity extends AppCompatActivity implements InfoFragment.OnFragmentInteractionListener, MediaItemFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity
+        implements InfoFragment.OnFragmentInteractionListener,
+        ListFragment.OnListFragmentInteractionListener {
 
-    final String TAG = "CT_AM";
     final String SELECTED_PARAM = "ID_NUMBER";
-    Count counter;
+    //  The set of fragments to display in the view pager
+    CountFragment mediaList;
+    CountFragment houseList;
+    CountFragment bodyList;
+    //  Binding views for better performance
     @BindView(R.id.pager)
     ViewPager viewPager;
     @BindView(R.id.top_toolbar)
     Toolbar topToolbar;
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
-    private int NUM_PAGES = 2;
+    //  Controls the number of fragments contained within
+    //  the viewpager
+    private int NUM_PAGES = 3;
+    //  Object that maps layouts with data models for the
+    //  viewpager
     private PagerAdapter myPagerAdapter;
 
     @Override
@@ -42,29 +51,38 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        // Check contents of table
         List<Count> list = Count.listAll(Count.class);
-        for (Count item : list) {
-            Log.d(TAG, "out: " + item.count + " - " + item.countCategory + " - " + item.timestamp);
-        }
 
+        // Print contents of the database
+        Utils.printToConsole(list);
+
+        // Configure toolbar
         topToolbar.setTitle(getResources().getString(R.string.app_name));
+
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
+                Log.d(Utils.TAG, "Bottom Bar, selected value = " + bottomBar.getCurrentTab().getTitle());
+
                 if (tabId == R.id.tab_media) {
+                    viewPager.setCurrentItem(0);
+                }
+
+                if (tabId == R.id.tab_favorites) {
                     viewPager.setCurrentItem(1);
                 }
-                if (tabId == R.id.tab_favorites) {
-                    viewPager.setCurrentItem(0);
+
+                if (tabId == R.id.tab_friends) {
+                    viewPager.setCurrentItem(2);
                 }
             }
 
         });
 
-        myPagerAdapter = new MyPagerAdaper(getSupportFragmentManager());
+        myPagerAdapter = new ListPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(myPagerAdapter);
-        viewPager.setCurrentItem(1);
-
+        viewPager.setCurrentItem(0);
     }
 
     public void infoFragmentClicked(Uri uri) {
@@ -76,20 +94,25 @@ public class MainActivity extends AppCompatActivity implements InfoFragment.OnFr
         startActivity(mIntent);
     }
 
-    private class MyPagerAdaper extends FragmentStatePagerAdapter {
+    private class ListPagerAdapter extends FragmentStatePagerAdapter {
 
-        public MyPagerAdaper(FragmentManager f_manager) {
+        public ListPagerAdapter(FragmentManager f_manager) {
             super(f_manager);
         }
 
         @Override
         public Fragment getItem(int position) {
+            Log.d(Utils.TAG, "Tag value = " + bottomBar.getCurrentTab().getTitle());
             switch (position) {
                 case 0:
-                    return new InfoFragment();
+                    //return new ListFragment();
+                    return ListFragment.newInstance(1, "Media");
+                case 1:
+                    return ListFragment.newInstance(1, "Chores");
                 default:
-                    return new MediaItemFragment();
+                    return ListFragment.newInstance(1, "Self");
             }
+
         }
 
         @Override

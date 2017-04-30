@@ -25,7 +25,6 @@ public class CountFragment extends Fragment {
 
     // Counter model associated with this fragment
     private static Count counter;
-    final String TAG = "CT_AM";
     final String FLAG_LABEL = "first_run";
 
     // Classification scheme
@@ -112,7 +111,7 @@ public class CountFragment extends Fragment {
     private void out() {
         List<Count> books = Count.listAll(Count.class);
         for (Count count : books) {
-            Log.d(TAG, "out: " + count.count + " - " + count.countCategory + " - " + count.countAction + " - " + count.timestamp);
+            Log.d(Utils.TAG, "out: " + count.count + " - " + count.countCategory + " - " + count.countAction + " - " + count.timestamp);
         }
     }
 
@@ -121,6 +120,7 @@ public class CountFragment extends Fragment {
     }
 
     private void init() {
+
         String sampleCategory = "Chores";
         Resources resources = getResources();
         String[] choreActions = resources.getStringArray(R.array.chore_actions);

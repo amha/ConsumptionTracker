@@ -1,14 +1,13 @@
 <resources>
     <!-- Defaults -->
-    <string name="app_name">Consumption Tracker</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Qual Count</string>
+    <string name="hello_blank_fragment">Blankness, where have you been?</string>
 
     <!-- Count Fragment -->
     <string name="counter_prompt">How was the experience?</string>
     <string name="counter_button">+1</string>
     <string name="counter_default_number">00</string>
     <string name="counter_free_text_hint">Was it eventful?</string>
-
 
     <!-- Config -->
     <string-array name="count_categories">
@@ -24,4 +23,19 @@
         <item>Buy Groceries</item>
     </string-array>
 
+    <string-array name="self_actions">
+        <item>Exercise</item>
+        <item>Meditate</item>
+        <item>Journal</item>
+        <item>Felt Positive</item>
+        <item>Felt Negative</item>
+    </string-array>
+
+    <string-array name="media_actions">
+        <item>Read News</item>
+        <item>Watched Video</item>
+        <item>Visited Social Network</item>
+        <item>Played Video Game</item>
+        <item>Chatted (Whatsapp, etc..)</item>
+    </string-array>
 </resources>

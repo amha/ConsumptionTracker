@@ -15,31 +15,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * An fragment
  */
-public class MediaItemFragment extends Fragment {
+public class ListFragment extends Fragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private final String TAG = "CT_AM";
+    private static final String ARG_COLUMN_COUNT = "columnCount";
+    private static final String ARG_SELECTED_TAB = "selectedTab";
+    //  Collection of user actions to track.
     List<String> mediaItems;
+    //  The category associated with a set of user actions.
+    private String category;
+    //  ?
     private int mColumnCount = 1;
+
+    //  Pass user clicks to the parent activity.
     private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public MediaItemFragment() {
+    public ListFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static MediaItemFragment newInstance(int columnCount) {
-        MediaItemFragment fragment = new MediaItemFragment();
+    public static ListFragment newInstance(int columnCount, String selectedCategory) {
+        ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putString(ARG_SELECTED_TAB, selectedCategory);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,6 +50,7 @@ public class MediaItemFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            category = getArguments().getString(ARG_SELECTED_TAB);
         }
     }
 
@@ -59,31 +60,48 @@ public class MediaItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mediaitem_list, container, false);
 
         mediaItems = new ArrayList<String>();
+        String[] mediaArray;
 
-        String[] mediaArray = getResources().getStringArray(R.array.chore_actions);
+        Log.d(Utils.TAG, "category value = " + category);
+
+        switch (category) {
+            case "Media":
+                mediaArray = getResources().getStringArray(R.array.media_actions);
+                break;
+            case "Chores":
+                mediaArray = getResources().getStringArray(R.array.chore_actions);
+                break;
+            default:
+                mediaArray = getResources().getStringArray(R.array.self_actions);
+                break;
+        }
+
         for (String item : mediaArray) {
             mediaItems.add(item);
-            Log.d(TAG, "item data = " + item);
         }
-        // Set the adapter
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
+
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setLayoutManager(
+                        new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.setLayoutManager(
+                        new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new MyMediaItemRecyclerViewAdapter(mediaItems, mListener));
+            recyclerView.setAdapter(
+                    new ListItemRecyclerViewAdapter(mediaItems, mListener));
         }
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {

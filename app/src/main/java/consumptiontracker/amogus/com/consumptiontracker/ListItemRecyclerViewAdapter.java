@@ -8,14 +8,15 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import consumptiontracker.amogus.com.consumptiontracker.MediaItemFragment.OnListFragmentInteractionListener;
+import consumptiontracker.amogus.com.consumptiontracker.ListFragment.OnListFragmentInteractionListener;
 
-public class MyMediaItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMediaItemRecyclerViewAdapter.ViewHolder> {
+public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<String> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMediaItemRecyclerViewAdapter(List<String> items, OnListFragmentInteractionListener listener) {
+    public ListItemRecyclerViewAdapter(List<String> items,
+                                       OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
