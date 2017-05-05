@@ -1,7 +1,8 @@
 <resources>
     <!-- Defaults -->
     <string name="app_name">Qual Count</string>
-    <string name="hello_blank_fragment">Blankness, where have you been?</string>
+    <!--<string name="hello_blank_fragment">Blankness, where have you been?</string>-->
+    <string name="temp">Temp message.</string>
 
     <!-- Count Fragment -->
     <string name="counter_prompt">How was the experience?</string>
@@ -38,4 +39,8 @@
         <item>Played Video Game</item>
         <item>Chatted (Whatsapp, etc..)</item>
     </string-array>
+
+    <string name="report_section_media_label">Media</string>
+
+
 </resources>

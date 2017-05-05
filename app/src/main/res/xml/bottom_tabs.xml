@@ -6,10 +6,15 @@
         title="Media" />
     <tab
         icon="@drawable/ic_info_outline"
-        id="@+id/tab_friends"
+        id="@+id/tab_chores"
         title="Chores" />
     <tab
         icon="@drawable/ic_favorite"
-        id="@+id/tab_favorites"
+        id="@+id/tab_self"
         title="Self" />
+
+    <tab
+        icon="@drawable/ic_assessment"
+        id="@+id/tab_report"
+        title="Report" />
 </tabs>

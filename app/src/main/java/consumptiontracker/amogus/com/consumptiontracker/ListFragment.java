@@ -62,7 +62,7 @@ public class ListFragment extends Fragment {
         mediaItems = new ArrayList<String>();
         String[] mediaArray;
 
-        Log.d(Utils.TAG, "category value = " + category);
+        Log.d(Utils.TAG, "List Fragment | category value = " + category);
 
         switch (category) {
             case "Media":

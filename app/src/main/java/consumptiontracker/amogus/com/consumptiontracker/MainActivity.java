@@ -27,20 +27,25 @@ public class MainActivity extends AppCompatActivity
         ListFragment.OnListFragmentInteractionListener {
 
     final String SELECTED_PARAM = "ID_NUMBER";
+
     //  The set of fragments to display in the view pager
-    CountFragment mediaList;
-    CountFragment houseList;
-    CountFragment bodyList;
-    //  Binding views for better performance
+    ListFragment mediaListFragment;
+    ListFragment choreListFragment;
+    ListFragment selfListFragment;
+    ReportFragment reportFragment;
+
+    //  Binding views via butterknife
     @BindView(R.id.pager)
     ViewPager viewPager;
     @BindView(R.id.top_toolbar)
     Toolbar topToolbar;
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
+
     //  Controls the number of fragments contained within
     //  the viewpager
-    private int NUM_PAGES = 3;
+    private int NUM_PAGES = 4;
+
     //  Object that maps layouts with data models for the
     //  viewpager
     private PagerAdapter myPagerAdapter;
@@ -53,33 +58,33 @@ public class MainActivity extends AppCompatActivity
 
         // Check contents of table
         List<Count> list = Count.listAll(Count.class);
-
-        // Print contents of the database
         Utils.printToConsole(list);
 
-        // Configure toolbar
+        // Configure toolbar and bottombar
         topToolbar.setTitle(getResources().getString(R.string.app_name));
-
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                Log.d(Utils.TAG, "Bottom Bar, selected value = " + bottomBar.getCurrentTab().getTitle());
-
-                if (tabId == R.id.tab_media) {
-                    viewPager.setCurrentItem(0);
-                }
-
-                if (tabId == R.id.tab_favorites) {
-                    viewPager.setCurrentItem(1);
-                }
-
-                if (tabId == R.id.tab_friends) {
-                    viewPager.setCurrentItem(2);
+                Log.d(Utils.TAG, "Tab ID : " + tabId);
+                switch (tabId) {
+                    case R.id.tab_media:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.tab_chores:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.tab_self:
+                        viewPager.setCurrentItem(2);
+                        break;
+                    case R.id.tab_report:
+                        viewPager.setCurrentItem(3);
+                        break;
                 }
             }
 
         });
 
+        // set viewpager adapter
         myPagerAdapter = new ListPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setCurrentItem(0);
@@ -96,8 +101,8 @@ public class MainActivity extends AppCompatActivity
 
     private class ListPagerAdapter extends FragmentStatePagerAdapter {
 
-        public ListPagerAdapter(FragmentManager f_manager) {
-            super(f_manager);
+        public ListPagerAdapter(FragmentManager fMmanager) {
+            super(fMmanager);
         }
 
         @Override
@@ -105,14 +110,31 @@ public class MainActivity extends AppCompatActivity
             Log.d(Utils.TAG, "Tag value = " + bottomBar.getCurrentTab().getTitle());
             switch (position) {
                 case 0:
-                    //return new ListFragment();
-                    return ListFragment.newInstance(1, "Media");
+                    // media fragment is first position
+                    if (mediaListFragment == null) {
+                        mediaListFragment = ListFragment.newInstance(1, "Media");
+                    }
+                    return mediaListFragment;
                 case 1:
-                    return ListFragment.newInstance(1, "Chores");
+                    // chores fragment is second
+                    if (choreListFragment == null) {
+                        choreListFragment = ListFragment.newInstance(1, "Chores");
+                    }
+                    return choreListFragment;
+                case 3:
+                    Log.d(Utils.TAG, "report tab selected");
+                    if (reportFragment == null) {
+                        reportFragment = ReportFragment.newInstance();
+                    }
+                    return reportFragment;
+                case 2:
                 default:
-                    return ListFragment.newInstance(1, "Self");
+                    // self fragment is set to default for now
+                    if (selfListFragment == null) {
+                        selfListFragment = ListFragment.newInstance(1, "Self");
+                    }
+                    return selfListFragment;
             }
-
         }
 
         @Override
