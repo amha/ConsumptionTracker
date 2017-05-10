@@ -1,6 +1,5 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -11,9 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.orm.SugarRecord;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,22 +19,23 @@ import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
 public class CountFragment extends Fragment {
 
+    final static String SELECTED_CATEGORY = "category";
+    final static String SELECTED_ACTON = "action";
     // Counter model associated with this fragment
     private static Count counter;
-    final String FLAG_LABEL = "first_run";
-
-    // Classification scheme
-    final String categories = "Media";
-    final String type = "Reading";
     // Determine whether to create a new table counter
     // based on boolean value
     boolean flag = false;
-    String title;
+    String userAction;
+    String userCategory;
+
     // Data binding views via butterknife
     @BindView(R.id.button)
     Button clicker;
+
     @BindView(R.id.count_output)
     TextView countOutput;
+
     @BindView(R.id.count_toolbar)
     Toolbar toolbar;
 
@@ -47,10 +44,11 @@ public class CountFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static CountFragment newInstance(String title) {
+    public static CountFragment newInstance(String category, String action) {
         CountFragment fragment = new CountFragment();
         Bundle args = new Bundle();
-        args.putString("PAGE", title);
+        args.putString(SELECTED_CATEGORY, category);
+        args.putString(SELECTED_ACTON, action);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,23 +56,9 @@ public class CountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // set page title based on what was selected on
-        // the previous screen
         if (getArguments() != null) {
-            title = getArguments().getString("PAGE");
-        }
-
-        counter = Count.findById(Count.class, 1);
-        if (counter != null) {
-            // check if count table has been created yet
-            counter.save();
-        } else {
-            // counter table doesnt' exist, so create it
-            //counter = new Count(categories, type);
-            //counter.save();
-            init();
-
+            userAction = getArguments().getString(SELECTED_ACTON);
+            userCategory = getArguments().getString(SELECTED_CATEGORY);
         }
     }
 
@@ -86,22 +70,21 @@ public class CountFragment extends Fragment {
         ButterKnife.bind(this, layout);
 
         // Update toolbar with selected item
-        toolbar.setTitle(title);
+        toolbar.setTitle(userAction);
 
-        // Display current count
-        if (counter != null) {
-            countOutput.setText(String.valueOf(SugarRecord.findById(Count.class, 1).count));
+        String currentActionCount = getActionCount(userAction);
+        if (Integer.valueOf(currentActionCount) > 0) {
+            countOutput.setText(String.valueOf(currentActionCount));
         }
 
-        // Add listener to capture counting
         clicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Count temp = SugarRecord.findById(Count.class, 1);
+                Count temp = new Count(userCategory, userAction);
                 temp.count = temp.count + 1;
                 temp.timestamp = new Date(System.currentTimeMillis());
                 temp.save();
-                countOutput.setText(String.valueOf(temp.count));
+                countOutput.setText(getActionCount(userAction));
                 out();
             }
         });
@@ -111,26 +94,11 @@ public class CountFragment extends Fragment {
     private void out() {
         List<Count> books = Count.listAll(Count.class);
         for (Count count : books) {
-            Log.d(Utils.TAG, "out: " + count.count + " - " + count.countCategory + " - " + count.countAction + " - " + count.timestamp);
+            Log.d(Utils.TAG, "Out: " + count.count + " - " + count.countCategory + " - " + count.countAction + " - " + count.timestamp);
         }
     }
 
-    public Count getCounter() {
-        return counter;
-    }
-
-    private void init() {
-
-        String sampleCategory = "Chores";
-        Resources resources = getResources();
-        String[] choreActions = resources.getStringArray(R.array.chore_actions);
-
-        List<Count> bulkInsertRecords = new ArrayList<Count>();
-
-        for (String action : choreActions) {
-            bulkInsertRecords.add(new Count(sampleCategory, action));
-        }
-        Count.saveInTx(bulkInsertRecords);
-        out();
+    private String getActionCount(String action) {
+        return String.valueOf(Count.find(Count.class, "count_action = ?", action).size());
     }
 }

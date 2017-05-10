@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity
         implements InfoFragment.OnFragmentInteractionListener,
         ListFragment.OnListFragmentInteractionListener {
 
-    final String SELECTED_PARAM = "ID_NUMBER";
+    final String SELECTED_ACTION = "ACTION_VALUE";
+    final String SELECTED_CATEGORY = "CATEGORY_VALUE";
 
     //  The set of fragments to display in the view pager
     ListFragment mediaListFragment;
@@ -93,9 +94,10 @@ public class MainActivity extends AppCompatActivity
     public void infoFragmentClicked(Uri uri) {
     }
 
-    public void onMediaClicked(String item) {
+    public void onItemClicked(String category, String action) {
         Intent mIntent = new Intent(getApplicationContext(), CountActivity.class);
-        mIntent.putExtra(SELECTED_PARAM, item);
+        mIntent.putExtra(SELECTED_ACTION, action);
+        mIntent.putExtra(SELECTED_CATEGORY, category);
         startActivity(mIntent);
     }
 

@@ -5,8 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
+import android.widget.TextView;
 
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
@@ -26,15 +25,41 @@ public class ReportFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<Count> countList = Count.find(Count.class, "category='s%", "Read News");
-        Utils.printToConsole(countList);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_report, container, false);
+        View layout = inflater.inflate(R.layout.fragment_report, container, false);
+        TextView out = (TextView) layout.findViewById(R.id.temp_report_output);
+
+        String[] chores = getResources().getStringArray(R.array.chore_actions);
+        String[] media = getResources().getStringArray(R.array.media_actions);
+        String[] self = getResources().getStringArray(R.array.self_actions);
+
+        for (String chore : chores) {
+            out.append(chore + " - "
+                    + Count.find(Count.class, "count_action = ?", chore).size()
+                    + "\n"
+            );
+        }
+
+        for (String mediaItem : media) {
+            out.append(mediaItem + " - "
+                    + Count.find(Count.class, "count_action = ?", mediaItem).size()
+                    + "\n"
+            );
+        }
+
+        for (String selfItem : self) {
+            out.append(selfItem + " - "
+                    + Count.find(Count.class, "count_action = ?", selfItem).size()
+                    + "\n"
+            );
+        }
+
+        return layout;
     }
 
 

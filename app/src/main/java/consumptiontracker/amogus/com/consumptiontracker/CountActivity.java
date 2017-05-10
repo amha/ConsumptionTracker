@@ -3,15 +3,12 @@ package consumptiontracker.amogus.com.consumptiontracker;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 public class CountActivity extends AppCompatActivity {
 
-    //  Tag used to create and retrieve a given fragment
     final String FRAGMENT_NAME = "countFragment";
-
-    // ?
-    final String SELECTED_PARAM = "ID_NUMBER";
+    final String SELECTED_ACTION = "ACTION_VALUE";
+    final String SELECTED_CATEGORY = "CATEGORY_VALUE";
 
     //  List of user actions to be counted.
     CountFragment countFragment;
@@ -22,8 +19,8 @@ public class CountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_count);
 
         // Get title parameter from intent
-        String title = String.valueOf(getIntent().getExtras().get(SELECTED_PARAM));
-        Log.d(Utils.TAG, "ACTIVITY - title = " + title);
+        String action = String.valueOf(getIntent().getExtras().get(SELECTED_ACTION));
+        String category = String.valueOf(getIntent().getExtras().get(SELECTED_CATEGORY));
 
         if (savedInstanceState != null) {
             // Restore fragment if it was saved...
@@ -31,7 +28,7 @@ public class CountActivity extends AppCompatActivity {
                     .getFragment(savedInstanceState, FRAGMENT_NAME);
         } else {
             //  ...otherwise create a new fragment
-            countFragment = CountFragment.newInstance(title);
+            countFragment = CountFragment.newInstance(category, action);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.count_frame, countFragment, FRAGMENT_NAME);
             transaction.commit();

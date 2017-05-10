@@ -93,7 +93,7 @@ public class ListFragment extends Fragment {
             }
 
             recyclerView.setAdapter(
-                    new ListItemRecyclerViewAdapter(mediaItems, mListener));
+                    new ListItemRecyclerViewAdapter(mediaItems, category, mListener));
         }
         return view;
     }
@@ -117,6 +117,6 @@ public class ListFragment extends Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        void onMediaClicked(String item);
+        void onItemClicked(String category, String action);
     }
 }
