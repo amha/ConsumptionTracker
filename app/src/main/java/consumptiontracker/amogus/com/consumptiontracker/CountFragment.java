@@ -2,7 +2,6 @@ package consumptiontracker.amogus.com.consumptiontracker;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +35,6 @@ public class CountFragment extends Fragment {
     @BindView(R.id.count_output)
     TextView countOutput;
 
-    @BindView(R.id.count_toolbar)
-    Toolbar toolbar;
-
     // Default constructor
     public CountFragment() {
         // Required empty public constructor
@@ -69,8 +65,11 @@ public class CountFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_count, container, false);
         ButterKnife.bind(this, layout);
 
-        // Update toolbar with selected item
-        toolbar.setTitle(userAction);
+//        // Update toolbar with selected item
+//        toolbar.setTitle(userAction);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         String currentActionCount = getActionCount(userAction);
         if (Integer.valueOf(currentActionCount) > 0) {

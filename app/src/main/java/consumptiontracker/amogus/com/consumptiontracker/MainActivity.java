@@ -12,6 +12,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity
 
         // Configure toolbar and bottombar
         topToolbar.setTitle(getResources().getString(R.string.app_name));
+        setSupportActionBar(topToolbar);
+
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -92,6 +97,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void infoFragmentClicked(Uri uri) {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_info:
+                Log.d(Utils.TAG, "Info pressed");
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
     }
 
     public void onItemClicked(String category, String action) {

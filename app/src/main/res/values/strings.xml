@@ -1,12 +1,14 @@
 <resources>
     <!-- Defaults -->
     <string name="app_name">Qual Count</string>
-    <!--<string name="hello_blank_fragment">Blankness, where have you been?</string>-->
     <string name="temp">Temp message.</string>
+
+    <!-- Menus -->
+    <string name="main_menu_info">Info</string>
 
     <!-- Count Fragment -->
     <string name="counter_prompt">How was the experience?</string>
-    <string name="counter_button">+1</string>
+    <string name="counter_button">Add 1</string>
     <string name="counter_default_number">00</string>
     <string name="counter_free_text_hint">Was it eventful?</string>
 
@@ -42,5 +44,6 @@
 
     <string name="report_section_media_label">Media</string>
 
+    <string name="desc_list_item_title">Name of a user action to be counted.</string>
 
 </resources>
