@@ -5,15 +5,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+@SuppressWarnings("WeakerAccess")
 public class CountActivity extends AppCompatActivity {
 
-    final String FRAGMENT_NAME = "countFragment";
-    final String SELECTED_ACTION = "ACTION_VALUE";
-    final String SELECTED_CATEGORY = "CATEGORY_VALUE";
+    private final String FRAGMENT_NAME = "countFragment";
 
     @BindView(R.id.count_toolbar)
     Toolbar countToolbar;
@@ -28,7 +28,9 @@ public class CountActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Get title parameter from intent
+        String SELECTED_ACTION = "ACTION_VALUE";
         String action = String.valueOf(getIntent().getExtras().get(SELECTED_ACTION));
+        String SELECTED_CATEGORY = "CATEGORY_VALUE";
         String category = String.valueOf(getIntent().getExtras().get(SELECTED_CATEGORY));
 
         // Update toolbar with selected item
@@ -36,7 +38,11 @@ public class CountActivity extends AppCompatActivity {
         countToolbar.setSubtitle(category);
         setSupportActionBar(countToolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        try {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e) {
+            Log.d(Utils.TAG, e.getMessage());
+        }
 
         if (savedInstanceState != null) {
             // Restore fragment if it was saved...

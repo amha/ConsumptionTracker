@@ -16,24 +16,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
+@SuppressWarnings("WeakerAccess")
 public class CountFragment extends Fragment {
 
-    final static String SELECTED_CATEGORY = "category";
-    final static String SELECTED_ACTON = "action";
-    // Counter model associated with this fragment
-    private static Count counter;
-    // Determine whether to create a new table counter
-    // based on boolean value
-    boolean flag = false;
-    String userAction;
-    String userCategory;
-
+    private final static String SELECTED_CATEGORY = "category";
+    private final static String SELECTED_ACTON = "action";
     // Data binding views via butterknife
     @BindView(R.id.button)
     Button clicker;
-
     @BindView(R.id.count_output)
     TextView countOutput;
+    private String userAction;
+    private String userCategory;
 
     // Default constructor
     public CountFragment() {

@@ -10,7 +10,7 @@ import consumptiontracker.amogus.com.consumptiontracker.model.Count;
  * Collection of static helper methods.
  */
 
-public class Utils {
+class Utils {
 
     final static String TAG = "CT_AM";
 

@@ -1,16 +1,15 @@
 <resources>
     <!-- Defaults -->
-    <string name="app_name">Qual Count</string>
+    <string name="app_name">My Tracker</string>
     <string name="temp">Temp message.</string>
 
     <!-- Menus -->
     <string name="main_menu_info">Info</string>
 
     <!-- Count Fragment -->
-    <string name="counter_prompt">How was the experience?</string>
+    <string name="counter_prompt">Add to the current count?</string>
     <string name="counter_button">Add 1</string>
     <string name="counter_default_number">00</string>
-    <string name="counter_free_text_hint">Was it eventful?</string>
 
     <!-- Config -->
     <string-array name="count_categories">
@@ -42,8 +41,15 @@
         <item>Chatted (Whatsapp, etc..)</item>
     </string-array>
 
-    <string name="report_section_media_label">Media</string>
-
+    <!-- Defaults -->
+    <string name="list_item_id">00</string>
+    <string name="list_item_user_action">Sample Action</string>
+    <string name="list_item_category">Category</string>
+    <string name="list_item_count_label">Count</string>
     <string name="desc_list_item_title">Name of a user action to be counted.</string>
 
+    <!-- Report -->
+    <string name="report_label_media">Media</string>
+    <string name="report_label_chores">Chores</string>
+    <string name="report_label_self">Self</string>
 </resources>

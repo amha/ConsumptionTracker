@@ -7,9 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
 public class ReportFragment extends Fragment {
+
+    @BindView(R.id.report_media_out)
+    TextView mediaOut;
+    @BindView(R.id.chore_output)
+    TextView choreOut;
+    @BindView(R.id.self_out)
+    TextView selfOut;
 
     public ReportFragment() {
         // Required empty public constructor
@@ -23,37 +32,32 @@ public class ReportFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_report, container, false);
-        TextView out = (TextView) layout.findViewById(R.id.temp_report_output);
+        ButterKnife.bind(this, layout);
 
         String[] chores = getResources().getStringArray(R.array.chore_actions);
         String[] media = getResources().getStringArray(R.array.media_actions);
         String[] self = getResources().getStringArray(R.array.self_actions);
 
         for (String chore : chores) {
-            out.append(chore + " - "
+            mediaOut.append(chore + " - "
                     + Count.find(Count.class, "count_action = ?", chore).size()
                     + "\n"
             );
         }
 
         for (String mediaItem : media) {
-            out.append(mediaItem + " - "
+            choreOut.append(mediaItem + " - "
                     + Count.find(Count.class, "count_action = ?", mediaItem).size()
                     + "\n"
             );
         }
 
         for (String selfItem : self) {
-            out.append(selfItem + " - "
+            selfOut.append(selfItem + " - "
                     + Count.find(Count.class, "count_action = ?", selfItem).size()
                     + "\n"
             );

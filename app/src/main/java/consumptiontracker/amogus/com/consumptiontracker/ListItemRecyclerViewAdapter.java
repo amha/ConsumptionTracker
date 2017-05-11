@@ -6,17 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import consumptiontracker.amogus.com.consumptiontracker.ListFragment.OnListFragmentInteractionListener;
 
 public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<String> mValues;
+    private final String[] mValues;
     private final OnListFragmentInteractionListener mListener;
     private String adapterCategory;
 
-    public ListItemRecyclerViewAdapter(List<String> items, String category,
+    public ListItemRecyclerViewAdapter(String[] items, String category,
                                        OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
@@ -32,9 +30,9 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        holder.mItem = mValues[position];
         holder.mIdView.setText(String.valueOf(position));
-        holder.mContentView.setText(mValues.get(position));
+        holder.mContentView.setText(mValues[position]);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +48,7 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

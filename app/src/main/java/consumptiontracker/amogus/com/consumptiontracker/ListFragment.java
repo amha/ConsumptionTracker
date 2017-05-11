@@ -11,21 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * An fragment
- */
 public class ListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "columnCount";
     private static final String ARG_SELECTED_TAB = "selectedTab";
-    //  Collection of user actions to track.
-    List<String> mediaItems;
+
     //  The category associated with a set of user actions.
     private String category;
-    //  ?
     private int mColumnCount = 1;
 
     //  Pass user clicks to the parent activity.
@@ -58,8 +50,6 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mediaitem_list, container, false);
-
-        mediaItems = new ArrayList<String>();
         String[] mediaArray;
 
         Log.d(Utils.TAG, "List Fragment | category value = " + category);
@@ -76,10 +66,6 @@ public class ListFragment extends Fragment {
                 break;
         }
 
-        for (String item : mediaArray) {
-            mediaItems.add(item);
-        }
-
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -93,7 +79,7 @@ public class ListFragment extends Fragment {
             }
 
             recyclerView.setAdapter(
-                    new ListItemRecyclerViewAdapter(mediaItems, category, mListener));
+                    new ListItemRecyclerViewAdapter(mediaArray, category, mListener));
         }
         return view;
     }

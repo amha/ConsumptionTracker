@@ -1,7 +1,6 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -25,18 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
+@SuppressWarnings("WeakerAccess")
 public class MainActivity extends AppCompatActivity
-        implements InfoFragment.OnFragmentInteractionListener,
-        ListFragment.OnListFragmentInteractionListener {
-
-    final String SELECTED_ACTION = "ACTION_VALUE";
-    final String SELECTED_CATEGORY = "CATEGORY_VALUE";
-
-    //  The set of fragments to display in the view pager
-    ListFragment mediaListFragment;
-    ListFragment choreListFragment;
-    ListFragment selfListFragment;
-    ReportFragment reportFragment;
+        implements ListFragment.OnListFragmentInteractionListener {
 
     //  Binding views via butterknife
     @BindView(R.id.pager)
@@ -45,14 +35,11 @@ public class MainActivity extends AppCompatActivity
     Toolbar topToolbar;
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
-
-    //  Controls the number of fragments contained within
-    //  the viewpager
-    private int NUM_PAGES = 4;
-
-    //  Object that maps layouts with data models for the
-    //  viewpager
-    private PagerAdapter myPagerAdapter;
+    //  The set of fragments to display in the view pager
+    private ListFragment mediaListFragment;
+    private ListFragment choreListFragment;
+    private ListFragment selfListFragment;
+    private ReportFragment reportFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +78,9 @@ public class MainActivity extends AppCompatActivity
         });
 
         // set viewpager adapter
-        myPagerAdapter = new ListPagerAdapter(getSupportFragmentManager());
+        PagerAdapter myPagerAdapter = new ListPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setCurrentItem(0);
-    }
-
-    public void infoFragmentClicked(Uri uri) {
     }
 
     @Override
@@ -110,7 +94,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.action_info:
-                Log.d(Utils.TAG, "Info pressed");
+                startActivity(new Intent(getApplicationContext(), InfoActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
@@ -119,7 +103,9 @@ public class MainActivity extends AppCompatActivity
 
     public void onItemClicked(String category, String action) {
         Intent mIntent = new Intent(getApplicationContext(), CountActivity.class);
+        String SELECTED_ACTION = "ACTION_VALUE";
         mIntent.putExtra(SELECTED_ACTION, action);
+        String SELECTED_CATEGORY = "CATEGORY_VALUE";
         mIntent.putExtra(SELECTED_CATEGORY, category);
         startActivity(mIntent);
     }
@@ -132,7 +118,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            Log.d(Utils.TAG, "Tag value = " + bottomBar.getCurrentTab().getTitle());
             switch (position) {
                 case 0:
                     // media fragment is first position
@@ -164,7 +149,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            return 4;
         }
     }
 }
