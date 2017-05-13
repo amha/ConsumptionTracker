@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_info:
                 startActivity(new Intent(getApplicationContext(), InfoActivity.class));
                 return true;
+            case R.id.action_settings:
+                startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
             default:
                 return super.onOptionsItemSelected(menuItem);
         }

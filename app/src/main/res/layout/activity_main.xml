@@ -11,9 +11,9 @@
         android:id="@+id/top_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:layout_alignParentTop="true"
         android:theme="?attr/actionBarTheme" />
 
     <com.roughike.bottombar.BottomBar
@@ -26,9 +26,9 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
-        android:layout_above="@id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/bottomBar"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"

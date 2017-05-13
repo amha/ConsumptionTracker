@@ -15,7 +15,7 @@ public class Count extends SugarRecord {
     // Type of user activity being counted
     public String countAction;
 
-    public Count(){
+    public Count() {
         // Empty constructor
     }
 
