@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ public class CountFragment extends DialogFragment {
     Button cancelButton;
     @BindView(R.id.saveCountButton)
     Button saveButton;
+    @BindView(R.id.ratingBar)
+    RatingBar ratingBar;
 
     private String userAction;
     private String userCategory;
@@ -76,10 +79,11 @@ public class CountFragment extends DialogFragment {
                 Count temp = new Count(userCategory, userAction);
                 temp.count = Integer.valueOf(countOutput.getText().toString());
                 temp.timestamp = new Date(System.currentTimeMillis());
+                temp.rating = Math.round(ratingBar.getRating());
                 temp.save();
 
                 Toast.makeText(getActivity().getApplicationContext(),
-                        "Successfully updated!", Toast.LENGTH_SHORT).show();
+                        "Successfully updated! Rating = " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });

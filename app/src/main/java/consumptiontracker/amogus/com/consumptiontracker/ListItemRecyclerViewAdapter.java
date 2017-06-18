@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import consumptiontracker.amogus.com.consumptiontracker.ListFragment.OnListFragmentInteractionListener;
+import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
 public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder> {
 
@@ -31,7 +32,8 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues[position];
-        holder.mIdView.setText(String.valueOf(position));
+        holder.actionLabel.setText(adapterCategory);
+        holder.mIdView.setText(getCount(mValues[position]));
         holder.mContentView.setText(mValues[position]);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +48,10 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
         });
     }
 
+    private String getCount(String action) {
+        return String.valueOf(Count.find(Count.class, "count_action = ?", action).size());
+    }
+
     @Override
     public int getItemCount() {
         return mValues.length;
@@ -55,6 +61,7 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final TextView actionLabel;
         public String mItem;
 
         public ViewHolder(View view) {
@@ -62,6 +69,7 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            actionLabel = (TextView) view.findViewById(R.id.ActionLabel);
         }
 
         @Override

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     Toolbar topToolbar;
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
+    PagerAdapter myPagerAdapter;
     //  The set of fragments to display in the view pager
     private ListFragment mediaListFragment;
     private ListFragment choreListFragment;
@@ -92,6 +93,15 @@ public class MainActivity extends AppCompatActivity
         PagerAdapter myPagerAdapter = new ListPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setCurrentItem(0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (myPagerAdapter != null) {
+            Log.d(Utils.TAG, "resume called");
+            myPagerAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
