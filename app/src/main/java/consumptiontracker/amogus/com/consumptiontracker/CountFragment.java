@@ -1,7 +1,7 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
 @SuppressWarnings("WeakerAccess")
-public class CountFragment extends Fragment {
+public class CountFragment extends DialogFragment {
 
     private final static String SELECTED_CATEGORY = "category";
     private final static String SELECTED_ACTON = "action";

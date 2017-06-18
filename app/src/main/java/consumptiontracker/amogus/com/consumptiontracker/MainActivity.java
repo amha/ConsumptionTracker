@@ -1,7 +1,10 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +47,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Load default settings
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+        Log.d(Utils.TAG, "value in shared pref = "
+                + preferences.getString("themeKey", "Nothing"));
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 

@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <ListPreference
+        android:defaultValue="@string/pref_theme_default"
         android:dialogTitle="@string/pref_theme_title"
         android:entries="@array/pref_app_theme"
-        android:entryValues="@array/pref_app_theme"
-        android:key="pref_theme"
+        android:entryValues="@array/pref_app_theme_values"
+        android:key="@string/pref_theme_key"
+        android:summary="@string/pref_theme_default"
         android:title="@string/pref_theme_title" />
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="pref_key_auto_delete"
-        android:summary="Bloop Summary"
-        android:title="Title" />
 </PreferenceScreen>

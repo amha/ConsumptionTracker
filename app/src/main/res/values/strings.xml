@@ -1,6 +1,6 @@
 <resources>
     <!-- Defaults -->
-    <string name="app_name">My Tracker</string>
+    <string name="app_name">Work &amp; Chores</string>
     <string name="temp">Temp message.</string>
 
     <!-- Menus -->
@@ -8,9 +8,13 @@
     <string name="main_menu_settings">Settings</string>
 
     <!-- Count Fragment -->
-    <string name="counter_prompt">Add to the current count?</string>
-    <string name="counter_button">Add 1</string>
-    <string name="counter_default_number">00</string>
+    <string name="counter_prompt">Today\'s Count</string>
+    <string name="counter_add_button">+1</string>
+    <string name="counter_minus_button">-1</string>
+    <string name="counter_default_number">0</string>
+    <string name="goal_prompt">Set Daily Goal</string>
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
 
     <!-- Config -->
     <string-array name="count_categories">
@@ -60,5 +64,15 @@
         <item>Light</item>
         <item>Dark</item>
     </string-array>
+
+    <string-array name="pref_app_theme_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string name="pref_theme_title">App Theme</string>
+    <string name="pref_theme_default">Default</string>
+    <string name="pref_theme_key">themeKey</string>
+
 </resources>
