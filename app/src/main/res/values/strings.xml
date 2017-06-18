@@ -15,6 +15,8 @@
     <string name="goal_prompt">Set Daily Goal</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
+    <string name="rating_label">Rating</string>
+    <string name="optional_label">Optional</string>
 
     <!-- Config -->
     <string-array name="count_categories">

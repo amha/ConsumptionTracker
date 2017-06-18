@@ -2,15 +2,14 @@ package consumptiontracker.amogus.com.consumptiontracker;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +25,11 @@ public class CountFragment extends DialogFragment {
     Button clicker;
     @BindView(R.id.count_output)
     TextView countOutput;
+    @BindView(R.id.cancelCountButton)
+    Button cancelButton;
+    @BindView(R.id.saveCountButton)
+    Button saveButton;
+
     private String userAction;
     private String userCategory;
 
@@ -59,11 +63,26 @@ public class CountFragment extends DialogFragment {
         View layout = inflater.inflate(R.layout.fragment_count, container, false);
         ButterKnife.bind(this, layout);
 
-//        // Update toolbar with selected item
-//        toolbar.setTitle(userAction);
-//        setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Count temp = new Count(userCategory, userAction);
+                temp.count = Integer.valueOf(countOutput.getText().toString());
+                temp.timestamp = new Date(System.currentTimeMillis());
+                temp.save();
+
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Successfully updated!", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            }
+        });
 
         String currentActionCount = getActionCount(userAction);
         if (Integer.valueOf(currentActionCount) > 0) {
@@ -73,25 +92,15 @@ public class CountFragment extends DialogFragment {
         clicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Count temp = new Count(userCategory, userAction);
-                temp.count = temp.count + 1;
-                temp.timestamp = new Date(System.currentTimeMillis());
-                temp.save();
-                countOutput.setText(getActionCount(userAction));
-                out();
+                countOutput.setText(getActionCount(userAction) + 1);
             }
         });
         return layout;
     }
 
-    private void out() {
-        List<Count> books = Count.listAll(Count.class);
-        for (Count count : books) {
-            Log.d(Utils.TAG, "Out: " + count.count + " - " + count.countCategory + " - " + count.countAction + " - " + count.timestamp);
-        }
-    }
-
     private String getActionCount(String action) {
         return String.valueOf(Count.find(Count.class, "count_action = ?", action).size());
     }
+
+
 }
