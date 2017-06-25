@@ -2,16 +2,29 @@ package consumptiontracker.amogus.com.consumptiontracker;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import consumptiontracker.amogus.com.consumptiontracker.model.Count;
 
-public class ReportFragment extends Fragment {
+public class ReportFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     @BindView(R.id.report_media_out)
     TextView mediaOut;
@@ -19,6 +32,11 @@ public class ReportFragment extends Fragment {
     TextView choreOut;
     @BindView(R.id.self_out)
     TextView selfOut;
+    @BindView(R.id.spinner)
+    Spinner mSpinner;
+    @BindView(R.id.chart)
+    PieChart mPieChart;
+
 
     public ReportFragment() {
         // Required empty public constructor
@@ -38,9 +56,34 @@ public class ReportFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_report, container, false);
         ButterKnife.bind(this, layout);
 
+        ArrayAdapter<CharSequence> spinnerAdapter =
+                ArrayAdapter.createFromResource(getContext(),
+                        R.array.spinner_options,
+                        android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(spinnerAdapter);
+        mSpinner.setOnItemSelectedListener(this);
+
+
         String[] chores = getResources().getStringArray(R.array.chore_actions);
         String[] media = getResources().getStringArray(R.array.media_actions);
         String[] self = getResources().getStringArray(R.array.self_actions);
+
+        List<PieEntry> entryList = new ArrayList<>();
+        entryList.add(new PieEntry(((float) chores.length), "Chores"));
+        entryList.add(new PieEntry(((float) media.length), "Media"));
+        entryList.add(new PieEntry(((float) self.length), "Self"));
+
+        PieDataSet dataSet = new PieDataSet(entryList, "Summary");
+        dataSet.setColors(new int[]{R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent}, getContext());
+        PieData data = new PieData(dataSet);
+        mPieChart.setData(data);
+
+        Description description = new Description();
+        description.setText("Summary");
+        description.setPosition(100, 100);
+        mPieChart.setDescription(description);
+        mPieChart.invalidate();
 
         for (String chore : chores) {
             mediaOut.append(chore + " - "
@@ -66,5 +109,11 @@ public class ReportFragment extends Fragment {
         return layout;
     }
 
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        Log.d(Utils.TAG, "Item selected");
+    }
 
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 }

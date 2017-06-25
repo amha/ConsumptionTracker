@@ -59,6 +59,12 @@
     <string name="report_label_media">Media</string>
     <string name="report_label_chores">Chores</string>
     <string name="report_label_self">Self</string>
+    <string name="spinner_prompt">Select Date Range</string>
+    <string-array name="spinner_options">
+        <item>This Week</item>
+        <item>This Month</item>
+        <item>All Dates</item>
+    </string-array>
 
     <!-- Preferences -->
     <string-array name="pref_app_theme">
