@@ -89,14 +89,16 @@ public class CountFragment extends DialogFragment {
         });
 
         String currentActionCount = getActionCount(userAction);
-        if (Integer.valueOf(currentActionCount) > 0) {
+        final int count = Integer.valueOf(currentActionCount);
+
+        if (count > 0) {
             countOutput.setText(String.valueOf(currentActionCount));
         }
 
         clicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                countOutput.setText(getActionCount(userAction) + 1);
+                countOutput.setText((count + 1) + "");
             }
         });
         return layout;

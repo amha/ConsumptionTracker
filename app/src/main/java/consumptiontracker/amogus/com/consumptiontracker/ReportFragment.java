@@ -37,7 +37,6 @@ public class ReportFragment extends Fragment implements AdapterView.OnItemSelect
     @BindView(R.id.chart)
     PieChart mPieChart;
 
-
     public ReportFragment() {
         // Required empty public constructor
     }
@@ -64,18 +63,25 @@ public class ReportFragment extends Fragment implements AdapterView.OnItemSelect
         mSpinner.setAdapter(spinnerAdapter);
         mSpinner.setOnItemSelectedListener(this);
 
-
+        // Get names of all user tasks being counted in the app
         String[] chores = getResources().getStringArray(R.array.chore_actions);
         String[] media = getResources().getStringArray(R.array.media_actions);
         String[] self = getResources().getStringArray(R.array.self_actions);
 
+        // Configuring the Pie Chart
         List<PieEntry> entryList = new ArrayList<>();
-        entryList.add(new PieEntry(((float) chores.length), "Chores"));
-        entryList.add(new PieEntry(((float) media.length), "Media"));
-        entryList.add(new PieEntry(((float) self.length), "Self"));
+        entryList.add(new PieEntry(((float)
+                Count.find(Count.class, "count_category = ?", "Chores").size()), "Chores"));
+        entryList.add(new PieEntry(((float)
+                Count.find(Count.class, "count_category = ?", "Media").size()), "Media"));
+        entryList.add(new PieEntry(((float)
+                Count.find(Count.class, "count_category = ?", "Self").size()), "Self"));
 
         PieDataSet dataSet = new PieDataSet(entryList, "Summary");
-        dataSet.setColors(new int[]{R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent}, getContext());
+        dataSet.setColors(new int[]{
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark,
+                R.color.colorAccent}, getContext());
         PieData data = new PieData(dataSet);
         mPieChart.setData(data);
 
@@ -85,27 +91,24 @@ public class ReportFragment extends Fragment implements AdapterView.OnItemSelect
         mPieChart.setDescription(description);
         mPieChart.invalidate();
 
+        // Populating the data table
         for (String chore : chores) {
             mediaOut.append(chore + " - "
                     + Count.find(Count.class, "count_action = ?", chore).size()
-                    + "\n"
-            );
+                    + "\n");
         }
 
         for (String mediaItem : media) {
             choreOut.append(mediaItem + " - "
                     + Count.find(Count.class, "count_action = ?", mediaItem).size()
-                    + "\n"
-            );
+                    + "\n");
         }
 
         for (String selfItem : self) {
             selfOut.append(selfItem + " - "
                     + Count.find(Count.class, "count_action = ?", selfItem).size()
-                    + "\n"
-            );
+                    + "\n");
         }
-
         return layout;
     }
 
