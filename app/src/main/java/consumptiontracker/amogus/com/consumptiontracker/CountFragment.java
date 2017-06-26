@@ -1,5 +1,6 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -84,7 +85,7 @@ public class CountFragment extends DialogFragment {
 
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Successfully updated! Rating = " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                startActivity(new Intent(getContext(), MainActivity.class));
             }
         });
 
@@ -98,7 +99,7 @@ public class CountFragment extends DialogFragment {
         clicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                countOutput.setText((count + 1) + "");
+                countOutput.setText(String.valueOf(count + 1));
             }
         });
         return layout;

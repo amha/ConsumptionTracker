@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 
 public class PreferenceActivity extends AppCompatActivity {
 
-    public static final String KEY_APP_THEME = "themeKey";
     @BindView(R.id.preference_toolbar)
     Toolbar toolbar;
 
@@ -40,14 +39,6 @@ public class PreferenceActivity extends AppCompatActivity {
     public static class MyPrefFragment extends PreferenceFragment
             implements Preference.OnPreferenceChangeListener {
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-
-            ListPreference appThemePref = (ListPreference) findPreference("themeKey");
-
-        }
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -61,7 +52,7 @@ public class PreferenceActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = getActivity()
                         .getPreferences(Context.MODE_PRIVATE).edit();
                 editor.putString("themeKey", selectedValue);
-                editor.commit();
+                editor.apply();
 
                 getActivity().setTheme(R.style.Light);
                 getActivity().finish();

@@ -1,19 +1,15 @@
 package consumptiontracker.amogus.com.consumptiontracker;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,7 +34,6 @@ public class MainActivity extends AppCompatActivity
     Toolbar topToolbar;
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
-    PagerAdapter myPagerAdapter;
     //  The set of fragments to display in the view pager
     private ListFragment mediaListFragment;
     private ListFragment choreListFragment;
@@ -48,14 +43,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Load default settings
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
-        SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
-        Log.d(Utils.TAG, "value in shared pref = "
-                + preferences.getString("themeKey", "Nothing"));
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -70,7 +57,6 @@ public class MainActivity extends AppCompatActivity
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                Log.d(Utils.TAG, "Tab ID : " + tabId);
                 switch (tabId) {
                     case R.id.tab_media:
                         viewPager.setCurrentItem(0);
@@ -91,17 +77,9 @@ public class MainActivity extends AppCompatActivity
 
         // set viewpager adapter
         PagerAdapter myPagerAdapter = new ListPagerAdapter(getSupportFragmentManager());
+        myPagerAdapter.notifyDataSetChanged();
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setCurrentItem(0);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (myPagerAdapter != null) {
-            Log.d(Utils.TAG, "resume called");
-            myPagerAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override
@@ -133,10 +111,10 @@ public class MainActivity extends AppCompatActivity
         startActivity(mIntent);
     }
 
-    private class ListPagerAdapter extends FragmentStatePagerAdapter {
+    private class ListPagerAdapter extends FragmentPagerAdapter {
 
-        public ListPagerAdapter(FragmentManager fMmanager) {
-            super(fMmanager);
+        public ListPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
         }
 
         @Override
@@ -155,7 +133,6 @@ public class MainActivity extends AppCompatActivity
                     }
                     return choreListFragment;
                 case 3:
-                    Log.d(Utils.TAG, "report tab selected");
                     if (reportFragment == null) {
                         reportFragment = ReportFragment.newInstance();
                     }
@@ -173,6 +150,11 @@ public class MainActivity extends AppCompatActivity
         @Override
         public int getCount() {
             return 4;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 }

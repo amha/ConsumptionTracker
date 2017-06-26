@@ -42,10 +42,7 @@ public class ReportFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     public static ReportFragment newInstance() {
-        ReportFragment fragment = new ReportFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new ReportFragment();
     }
 
     @Override
@@ -84,6 +81,7 @@ public class ReportFragment extends Fragment implements AdapterView.OnItemSelect
                 R.color.colorAccent}, getContext());
         PieData data = new PieData(dataSet);
         mPieChart.setData(data);
+        mPieChart.disableScroll();
 
         Description description = new Description();
         description.setText("Summary");

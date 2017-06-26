@@ -25,7 +25,7 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_mediaitem, parent, false);
+                .inflate(R.layout.fragment_media_item, parent, false);
         return new ViewHolder(view);
     }
 

@@ -5,8 +5,6 @@
     <color name="colorAccent">#4CAF50</color>
 
     <color name="colorDivider">#4443</color>
-    <color name="transparentBackground">#ECEFF1</color>
-
     <color name="colorMinus">#F44336</color>
 
 </resources>

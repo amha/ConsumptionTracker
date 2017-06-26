@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparentBackground"
     tools:context="consumptiontracker.amogus.com.consumptiontracker.CountFragment">
 
     <LinearLayout
@@ -24,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:onClick="closeButton"
             android:text="@string/cancel_button" />
 
         <Button

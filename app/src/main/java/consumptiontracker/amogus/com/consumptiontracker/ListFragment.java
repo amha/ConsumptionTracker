@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,10 @@ public class ListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "columnCount";
     private static final String ARG_SELECTED_TAB = "selectedTab";
-
+    ListItemRecyclerViewAdapter adapter;
     //  The category associated with a set of user actions.
     private String category;
     private int mColumnCount = 1;
-
     //  Pass user clicks to the parent activity.
     private OnListFragmentInteractionListener mListener;
 
@@ -52,8 +50,6 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mediaitem_list, container, false);
         String[] mediaArray;
 
-        Log.d(Utils.TAG, "List Fragment | category value = " + category);
-
         switch (category) {
             case "Media":
                 mediaArray = getResources().getStringArray(R.array.media_actions);
@@ -77,9 +73,8 @@ public class ListFragment extends Fragment {
                 recyclerView.setLayoutManager(
                         new GridLayoutManager(context, mColumnCount));
             }
-
-            recyclerView.setAdapter(
-                    new ListItemRecyclerViewAdapter(mediaArray, category, mListener));
+            adapter = new ListItemRecyclerViewAdapter(mediaArray, category, mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
