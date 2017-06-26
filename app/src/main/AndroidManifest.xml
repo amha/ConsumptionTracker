@@ -21,14 +21,17 @@
             android:value="count.db" />
 
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTask">
+            android:name=".LauncherActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"></activity>
         <activity
             android:name=".CountActivity"
             android:parentActivityName=".MainActivity" />
@@ -36,6 +39,7 @@
             android:name=".InfoActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".PreferenceActivity" />
+
     </application>
 
 </manifest>
