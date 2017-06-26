@@ -14,4 +14,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <!-- Launcher theme. -->
+    <style name="launcher" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/launcher_layout</item>
+    </style>
 </resources>
